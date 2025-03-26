@@ -77,6 +77,31 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                display: none;
+            }
+            tr {
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 10px;
+                background: #fff;
+            }
+            td {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+            }
+            td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+        }
     </style>
 </head>
 <body>
@@ -107,11 +132,11 @@
             tasks.forEach((task, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><input type="text" value="${task.text}" oninput="updateTask(${index}, 'text', this.value)"></td>
-                    <td><input type="date" value="${task.start}" oninput="updateTask(${index}, 'start', this.value)"></td>
-                    <td><input type="date" value="${task.end}" oninput="updateTask(${index}, 'end', this.value)"></td>
-                    <td class="status ${task.status}" onclick="toggleStatus(${index})">${task.status === 'concluido' ? 'Concluído' : 'Não Concluído'}</td>
-                    <td><button class="btn-small" onclick="clearTask(${index})">X</button></td>
+                    <td data-label="Tarefa"><input type="text" value="${task.text}" oninput="updateTask(${index}, 'text', this.value)"></td>
+                    <td data-label="Data de Início"><input type="date" value="${task.start}" oninput="updateTask(${index}, 'start', this.value)"></td>
+                    <td data-label="Data de Entrega"><input type="date" value="${task.end}" oninput="updateTask(${index}, 'end', this.value)"></td>
+                    <td data-label="Status" class="status ${task.status}" onclick="toggleStatus(${index})">${task.status === 'concluido' ? 'Concluído' : 'Não Concluído'}</td>
+                    <td data-label="Ação"><button class="btn-small" onclick="clearTask(${index})">X</button></td>
                 `;
                 taskTable.appendChild(row);
             });
